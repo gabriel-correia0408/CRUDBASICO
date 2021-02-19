@@ -1,13 +1,12 @@
 from flask import Flask
 from flask_migrate import Migrate
-from app.model import configure as config_db
+from app.model import configure as config_db, db
 
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/crudzin.db'
-
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///C:\\Users\\gabriel.correia\\Desktop\\CRUDBASICO\\crudebasico.db'
     config_db(app)
 
-    Migrate(app, app.db)
+    Migrate(app, db)
     return app
