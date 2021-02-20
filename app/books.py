@@ -1,10 +1,15 @@
 from flask import Blueprint
+from .model import Book
+from .sererializer import BookSchema
 
 bp_books = Blueprint('books', __name__)
 
 
 @bp_books.route('/mostrar', methods=['GET'])
 def mostrar():
+    bs = BookSchema(many=True)
+    result = Book.query.all()
+    return bs.jsonify(result), 200
     ...
 
 
