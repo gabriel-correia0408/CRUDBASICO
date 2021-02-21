@@ -1,6 +1,7 @@
-from flask import Blueprint
-from .model import Book
-from .sererializer import BookSchema
+from flask import Blueprint, current_app, request
+
+from app.model import Book
+from app.sererializer import BookSchema
 
 bp_books = Blueprint('books', __name__)
 
@@ -23,6 +24,10 @@ def modificar():
     ...
 
 
-@bp_books.route('/cadastrar', methods=['PUT'])
+@bp_books.route('/cadastrar', methods=['POST'])
 def cadastar():
-    ...
+    bs = BookSchema()
+    book, error = bs.load(request.json)
+    current_app.db.session.add(book)
+    current_app.db.session.commit()
+    return bs.jsonify(book), 201
